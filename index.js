@@ -1,6 +1,8 @@
 const BERT_START = String.fromCharCode(131)
 const SMALL_ATOM = String.fromCharCode(115)
+const SMALL_ATOM_UTF8 = String.fromCharCode(119)
 const ATOM = String.fromCharCode(100)
+const ATOM_UTF8 = String.fromCharCode(118)
 const SMALL_INTEGER = String.fromCharCode(97)
 const MAP = String.fromCharCode(116)
 const INTEGER = String.fromCharCode(98)
@@ -152,7 +154,9 @@ const decodeInner = s => {
 
   switch(type) {
     case SMALL_ATOM: return decodeAtom(s, 1)
+    case SMALL_ATOM_UTF8: return decodeAtom(s, 1)
     case ATOM: return decodeAtom(s, 2)
+    case ATOM_UTF8: return decodeAtom(s, 1)
     case SMALL_INTEGER: return decodeSmallInteger(s)
     case INTEGER: return decodeInteger(s, 4)
     case SMALL_BIG: return decodeBig(s, 1)
@@ -165,7 +169,7 @@ const decodeInner = s => {
     case SMALL_TUPLE: return decodeTuple(s, 1)
     case LARGE_TUPLE: return decodeLargeTuple(s, 4)
     case NIL: return decodeNil(s)
-    default: throw(`Unexpected BERT type: ${s.charCodeAt(0)}`)
+    default: throw(`Unexpected BERT type: ${type.charCodeAt(0)}`)
   }
 }
 
